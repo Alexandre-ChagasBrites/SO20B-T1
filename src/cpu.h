@@ -1,19 +1,52 @@
 #pragma once
 
-typedef struct cpu cpu;
-typedef struct cpu_estado_t cpu_estado_t;
-typedef enum { normal, instrucao_ilegal, violacao_de_memoria } cpu_interrupcao_t;
+#include <iostream>
+#include <string>
+#include <array>
+#include <vector>
 
-void cpu_altera_programa(cpu *c, int tam, char **m);
-void cpu_altera_dados(cpu* c, int tam, int *m);
-cpu_interrupcao_t cpu_interrupcao(cpu *c);
-void cpu_retorna_interrupcao(cpu *c);
-char *cpu_instrucao(cpu *c);
-void cpu_salva_estado(cpu *c, cpu_estado_t *e);
-void cpu_recupera_estado(cpu *c, cpu_estado_t *e);
-void cpu_estado_inicializa(cpu_estado_t *e);
-void cpu_executa(cpu *c);
+class CPU
+{
+public:
+    enum class Interrupcao
+    {
+        Normal, InstrucaoIlegal, ViolacaoDeMemoria
+    };
 
-cpu *cpu_cria();
-void cpu_deleta(cpu *c);
-void cpu_print(cpu *c);
+    struct Estado
+    {
+        Estado() : pc(0), acumulador(0), interrupcao(Interrupcao::Normal) {}
+
+        unsigned int pc;
+        int acumulador;
+        Interrupcao interrupcao;
+
+        friend std::ostream &operator<<(std::ostream &os, const Estado &estado);
+    };
+
+public:
+    //CPU() {};
+    //~CPU() {};
+
+    void AlteraPrograma(std::vector<std::string> programa);
+    void AlteraDados(std::vector<int> dados);
+
+    Interrupcao ObterInterrupcao();
+    void RetornaInterrupcao();
+    std::string Instrucao();
+
+    void SalvaEstado(Estado &e);
+    void AlteraEstado(Estado &e);
+    void Executa();
+
+    friend std::ostream &operator<<(std::ostream &os, CPU &cpu);
+
+private:
+    int MemoriaLer(unsigned int i);
+    void MemoriaEscrever(unsigned int i, int valor);
+
+private:
+    Estado estado;
+    std::vector<std::string> programa;
+    std::vector<int> dados;
+};
