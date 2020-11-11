@@ -13,30 +13,36 @@ public:
         Normal, InstrucaoIlegal, ViolacaoDeMemoria
     };
 
-    struct Estado
+    class Estado
     {
-        Estado() : pc(0), acumulador(0), interrupcao(Interrupcao::Normal) {}
+    public:
+        Estado();
 
+        void AlteraAcumulador(int acumulador);
+        int ObterAcumulador();
+
+        friend std::ostream &operator<<(std::ostream &os, const Estado &estado);
+        friend class CPU;
+
+    private:
         unsigned int pc;
         int acumulador;
         Interrupcao interrupcao;
-
-        friend std::ostream &operator<<(std::ostream &os, const Estado &estado);
     };
 
 public:
     //CPU() {};
     //~CPU() {};
 
-    void AlteraPrograma(std::vector<std::string> programa);
-    void AlteraDados(std::vector<int> dados);
+    void AlteraPrograma(std::vector<std::string> *programa);
+    void AlteraDados(std::vector<int> *dados);
 
     Interrupcao ObterInterrupcao();
     void RetornaInterrupcao();
     std::string Instrucao();
 
-    void SalvaEstado(Estado &e);
-    void AlteraEstado(Estado &e);
+    void SalvaEstado(Estado *e);
+    void AlteraEstado(Estado e);
     void Executa();
 
     friend std::ostream &operator<<(std::ostream &os, CPU &cpu);
@@ -47,6 +53,6 @@ private:
 
 private:
     Estado estado;
-    std::vector<std::string> programa;
-    std::vector<int> dados;
+    std::vector<std::string> *programa;
+    std::vector<int> *dados;
 };

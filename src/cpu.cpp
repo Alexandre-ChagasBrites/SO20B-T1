@@ -2,12 +2,24 @@
 
 #include <cstring>
 
-void CPU::AlteraPrograma(std::vector<std::string> programa)
+CPU::Estado::Estado() : pc(0), acumulador(0), interrupcao(CPU::Interrupcao::Normal) {}
+
+void CPU::Estado::AlteraAcumulador(int acumulador)
+{
+    this->acumulador = acumulador;
+}
+
+int CPU::Estado::ObterAcumulador()
+{
+    return acumulador;
+}
+
+void CPU::AlteraPrograma(std::vector<std::string> *programa)
 {
     this->programa = programa;
 }
 
-void CPU::AlteraDados(std::vector<int> dados)
+void CPU::AlteraDados(std::vector<int> *dados)
 {
     this->dados = dados;
 }
@@ -27,30 +39,30 @@ void CPU::RetornaInterrupcao()
 
 std::string CPU::Instrucao()
 {
-    if (estado.pc >= programa.size())
+    if (estado.pc >= programa->size())
     {
         estado.interrupcao = Interrupcao::ViolacaoDeMemoria;
         return "";
     }
-    return programa[estado.pc];
+    return (*programa)[estado.pc];
 }
 
-void CPU::SalvaEstado(Estado &e)
+void CPU::SalvaEstado(Estado *e)
 {
-    e = estado;
+    *e = estado;
 }
 
-void CPU::AlteraEstado(Estado &e)
+void CPU::AlteraEstado(Estado e)
 {
     estado = e;
 }
 
 void CPU::Executa()
 {
-    //if (estado.interrupcao != Interrupcao::Normal)
-    //    return;
-
     std::string instrucao = Instrucao();
+    if (estado.interrupcao == Interrupcao::ViolacaoDeMemoria)
+        return;
+
     bool incrementar = true;
 
     const char *c_instrucao = instrucao.c_str();
@@ -134,22 +146,22 @@ void CPU::Executa()
 
 int CPU::MemoriaLer(unsigned int i)
 {
-    if (i >= dados.size())
+    if (i >= dados->size())
     {
         estado.interrupcao = Interrupcao::ViolacaoDeMemoria;
         return 0;
     }
-    return dados[i];
+    return (*dados)[i];
 }
 
 void CPU::MemoriaEscrever(unsigned int i, int valor)
 {
-    if (i >= dados.size())
+    if (i >= dados->size())
     {
         estado.interrupcao = Interrupcao::ViolacaoDeMemoria;
         return;
     }
-    dados[i] = valor;
+    (*dados)[i] = valor;
 }
 
 std::ostream &operator<<(std::ostream &os, CPU &cpu)
@@ -158,8 +170,8 @@ std::ostream &operator<<(std::ostream &os, CPU &cpu)
     os << " Instrucao: " << cpu.Instrucao() << std::endl;
     os << cpu.estado;
     os << " Memoria de dados:\n";
-    for (unsigned int i = 0; i < cpu.dados.size(); i++)
-        os << "  " << std::hex << i << " = " << std::dec << cpu.dados[i] << std::endl;
+    for (unsigned int i = 0; i < cpu.dados->size(); i++)
+        os << "  " << std::hex << i << " = " << std::dec << (*cpu.dados)[i] << std::endl;
     return os;
 }
 

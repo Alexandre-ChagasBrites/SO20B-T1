@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 
-#include "cpu.h"
+#include "so.h"
 
 std::vector<std::string> CarregaPrograma(const char *path)
 {
@@ -23,21 +23,10 @@ int main(int argc, char *argv[])
     std::vector<std::string> programa = CarregaPrograma("programa.txt");
     std::vector<int> dados(4);
 
-    CPU cpu;
+    SO so;
+    so.Inicializa(&programa, &dados);
 
-    CPU::Estado e;
-    cpu.AlteraEstado(e);
-
-    cpu.AlteraPrograma(programa);
-    cpu.AlteraDados(dados);
-
-    while (cpu.ObterInterrupcao() == CPU::Interrupcao::Normal)
-        cpu.Executa();
-
-    std::cout << cpu;
-
-    //for (unsigned int i = 0; i < dados.size(); i++)
-    //    std::cout << std::hex << i << " = " << std::dec << dados[i] << std::endl;
+    std::cout << so.cpu;
 
     return 0;
 }
