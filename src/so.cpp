@@ -14,7 +14,7 @@ void SO::Inicializa(std::vector<std::string> *programa, std::vector<int> *dados)
     controlador.Executa(this, &cpu);
 }
 
-bool SO::InstrucaoIlegal()
+bool SO::InstrucaoIlegal(Temporizador &temporizador)
 {
     std::string instrucao = cpu.Instrucao();
 
@@ -32,8 +32,12 @@ bool SO::InstrucaoIlegal()
         //LE	n	pede ao SO para fazer a leitura de um dado (inteiro) do dispositivo de E/S n; o dado
         //          o dado será colocado no acumulador
         int n;
-        std::sscanf(c_instrucao, "%*s %i", &n);
+        //std::sscanf(c_instrucao, "%*s %i", &n);
         //estado.acumulador = n;
+
+        cpu.SalvaEstado(&estado);
+        cpu.Dormir();
+        temporizador.PedirInterrupcao(false, 10, "DORMINDO");
 
         return true;
     }
@@ -41,7 +45,11 @@ bool SO::InstrucaoIlegal()
     {
         //GRAVA	n	pede ao SO gravar o valor do acumulador no dispositivo de E/S n
         int n;
-        std::sscanf(c_instrucao, "%*s %i", &n);
+        //std::sscanf(c_instrucao, "%*s %i", &n);
+
+        cpu.SalvaEstado(&estado);
+        cpu.Dormir();
+        temporizador.PedirInterrupcao(false, 10, "DORMINDO");
 
         return true;
     }

@@ -57,8 +57,16 @@ void CPU::AlteraEstado(Estado e)
     estado = e;
 }
 
+void CPU::Dormir()
+{
+    estado.interrupcao = Interrupcao::Dormindo;
+}
+
 void CPU::Executa()
 {
+    if (estado.interrupcao != Interrupcao::Normal)
+        return;
+
     std::string instrucao = Instrucao();
     if (estado.interrupcao == Interrupcao::ViolacaoDeMemoria)
         return;
@@ -190,6 +198,9 @@ std::ostream &operator<<(std::ostream &os, const CPU::Estado &estado)
             break;
         case CPU::Interrupcao::ViolacaoDeMemoria:
             std::cout << "Violacao de memoria\n";
+            break;
+        case CPU::Interrupcao::Dormindo:
+            std::cout << "Dormindo\n";
             break;
     }
     return os;

@@ -7,15 +7,15 @@ void Controlador::Executa(SO *so, CPU *cpu)
 {
     while (true)
     {
-        cpu->Executa();
-
-        if (cpu->ObterInterrupcao() != CPU::Interrupcao::Normal)
+        if (cpu->ObterInterrupcao() != CPU::Interrupcao::Dormindo)
         {
+            cpu->Executa();
+
             bool continuar = true;
             switch (cpu->ObterInterrupcao())
             {
             case CPU::Interrupcao::InstrucaoIlegal:
-                continuar = so->InstrucaoIlegal();
+                continuar = so->InstrucaoIlegal(temporizador);
                 break;
             case CPU::Interrupcao::ViolacaoDeMemoria:
                 continuar = so->ViolacaoDeMemoria();
@@ -29,9 +29,13 @@ void Controlador::Executa(SO *so, CPU *cpu)
         }
 
         temporizador.PassarTempo();
-        while (temporizador.ObterInterrupcao() != CPU::Interrupcao::Normal)
+        for (std::string interrupcao = temporizador.ObterInterrupcao(); interrupcao != ""; interrupcao = temporizador.ObterInterrupcao())
         {
-
+            if (interrupcao == "DORMINDO")
+            {
+                cpu->AlteraEstado(so->estado);
+                cpu->RetornaInterrupcao();
+            }
         }
     }
 }

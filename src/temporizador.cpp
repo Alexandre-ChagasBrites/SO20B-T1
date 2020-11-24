@@ -1,7 +1,9 @@
 #include "temporizador.h"
 
-Temporizador::Interrupcao::Interrupcao(Temporizador::Interrupcao::Tipo tipo, unsigned int periodo, unsigned int data, CPU::Interrupcao codigo) :
-    tipo(tipo), periodo(periodo), data(data), codigo(codigo) {}
+Temporizador::Interrupcao::Interrupcao(bool periodica, unsigned int periodo, unsigned int data, std::string codigo) :
+    periodo(periodo), data(data), periodica(periodica), codigo(codigo) {}
+
+Temporizador::Temporizador() : tempo(0), interrupcoes() {}
 
 void Temporizador::PassarTempo()
 {
@@ -13,23 +15,23 @@ unsigned int Temporizador::ObterTempo()
     return tempo;
 }
 
-CPU::Interrupcao Temporizador::ObterInterrupcao()
+std::string Temporizador::ObterInterrupcao()
 {
     if (interrupcoes.empty())
-        return CPU::Interrupcao::Normal;
+        return "";
 
-    Interrupcao interrupcao = interrupcoes.front();
+    Interrupcao interrupcao = interrupcoes.top();
     if (tempo < interrupcao.data)
-        return CPU::Interrupcao::Normal;
+        return "";
 
     interrupcoes.pop();
-    if (interrupcao.tipo == Interrupcao::Tipo::Periodica)
-        interrupcoes.push(Interrupcao(interrupcao.tipo, interrupcao.periodo, interrupcao.data + interrupcao.periodo, interrupcao.codigo));
+    if (interrupcao.periodica)
+        interrupcoes.push(Interrupcao(interrupcao.periodica, interrupcao.periodo, interrupcao.data + interrupcao.periodo, interrupcao.codigo));
 
     return interrupcao.codigo;
 }
 
-void Temporizador::PedirInterrupcao(Interrupcao::Tipo tipo, unsigned int periodo, CPU::Interrupcao codigo)
+void Temporizador::PedirInterrupcao(bool periodica, unsigned int periodo, std::string codigo)
 {
-    interrupcoes.push(Interrupcao(tipo, periodo, tempo + periodo, codigo));
+    interrupcoes.push(Interrupcao(periodica, periodo, tempo + periodo, codigo));
 }

@@ -10,7 +10,7 @@ class CPU
 public:
     enum class Interrupcao
     {
-        Normal, InstrucaoIlegal, ViolacaoDeMemoria
+        Normal, InstrucaoIlegal, ViolacaoDeMemoria, Dormindo
     };
 
     class Estado
@@ -43,6 +43,7 @@ public:
 
     void SalvaEstado(Estado *e);
     void AlteraEstado(Estado e);
+    void Dormir();
     void Executa();
 
     friend std::ostream &operator<<(std::ostream &os, CPU &cpu);

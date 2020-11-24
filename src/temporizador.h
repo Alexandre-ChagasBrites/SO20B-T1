@@ -1,6 +1,8 @@
 #pragma once
 
+#include <string>
 #include <queue>
+#include <vector>
 #include "cpu.h"
 
 class Temporizador
@@ -9,31 +11,37 @@ public:
     class Interrupcao
     {
     public:
-        enum class Tipo
-        {
-            Periodica, Aperiodica
-        };
-
-    public:
-        Interrupcao(Tipo tipo, unsigned int periodo, unsigned int data, CPU::Interrupcao codigo);
+        Interrupcao(bool periodica, unsigned int periodo, unsigned int data, std::string codigo);
 
         friend class Temporizador;
 
     private:
-        Tipo tipo;
         unsigned int periodo;
         unsigned int data;
-        CPU::Interrupcao codigo;
+        bool periodica;
+        std::string codigo;
+    };
+
+private:
+    class Comparador
+    {
+    public:
+        bool operator()(const Interrupcao &a, const Interrupcao &b) const
+        {
+            return a.data >= b.data;
+        }
     };
 
 public:
+    Temporizador();
+
     void PassarTempo();
     unsigned int ObterTempo();
 
-    CPU::Interrupcao ObterInterrupcao();
-    void PedirInterrupcao(Interrupcao::Tipo tipo, unsigned int periodo, CPU::Interrupcao codigo);
+    std::string ObterInterrupcao();
+    void PedirInterrupcao(bool periodica, unsigned int periodo, std::string codigo);
 
 private:
     unsigned int tempo;
-    std::queue<Interrupcao> interrupcoes;
+    std::priority_queue<Interrupcao, std::vector<Interrupcao>, Comparador> interrupcoes;
 };
