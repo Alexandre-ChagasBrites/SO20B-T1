@@ -4,6 +4,13 @@
 
 CPU::Estado::Estado() : pc(0), acumulador(0), interrupcao(CPU::Interrupcao::Normal) {}
 
+void CPU::Estado::Inicializa()
+{
+    pc = 0;
+    acumulador = 0;
+    interrupcao = CPU::Interrupcao::Normal;
+}
+
 void CPU::Estado::AlteraAcumulador(int acumulador)
 {
     this->acumulador = acumulador;

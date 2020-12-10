@@ -8,7 +8,5 @@ class CPU;
 class Controlador
 {
 public:
-    void Executa(SO *so, CPU *cpu);
-private:
-    Temporizador temporizador;
+    void Executa(SO *so, CPU *cpu, Temporizador *temporizador);
 };

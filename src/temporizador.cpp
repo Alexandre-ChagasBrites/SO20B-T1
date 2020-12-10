@@ -35,3 +35,9 @@ void Temporizador::PedirInterrupcao(bool periodica, unsigned int periodo, std::s
 {
     interrupcoes.push(Interrupcao(periodica, periodo, tempo + periodo, codigo));
 }
+
+std::ostream &operator<<(std::ostream &os, const Temporizador &temporizador)
+{
+    os << "Temporizador = " << temporizador.tempo << std::endl;
+    return os;
+}

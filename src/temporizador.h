@@ -41,6 +41,8 @@ public:
     std::string ObterInterrupcao();
     void PedirInterrupcao(bool periodica, unsigned int periodo, std::string codigo);
 
+    friend std::ostream &operator<<(std::ostream &os, const Temporizador &temporizador);
+
 private:
     unsigned int tempo;
     std::priority_queue<Interrupcao, std::vector<Interrupcao>, Comparador> interrupcoes;

@@ -3,7 +3,7 @@
 #include "so.h"
 #include "cpu.h"
 
-void Controlador::Executa(SO *so, CPU *cpu)
+void Controlador::Executa(SO *so, CPU *cpu, Temporizador *temporizador)
 {
     while (true)
     {
@@ -15,7 +15,7 @@ void Controlador::Executa(SO *so, CPU *cpu)
             switch (cpu->ObterInterrupcao())
             {
             case CPU::Interrupcao::InstrucaoIlegal:
-                continuar = so->InstrucaoIlegal(temporizador);
+                continuar = so->InstrucaoIlegal();
                 break;
             case CPU::Interrupcao::ViolacaoDeMemoria:
                 continuar = so->ViolacaoDeMemoria();
@@ -28,8 +28,7 @@ void Controlador::Executa(SO *so, CPU *cpu)
                 break;
         }
 
-        temporizador.PassarTempo();
-        for (std::string interrupcao = temporizador.ObterInterrupcao(); interrupcao != ""; interrupcao = temporizador.ObterInterrupcao())
+        for (std::string interrupcao = temporizador->ObterInterrupcao(); interrupcao != ""; interrupcao = temporizador->ObterInterrupcao())
         {
             if (interrupcao == "DORMINDO")
             {
@@ -37,5 +36,6 @@ void Controlador::Executa(SO *so, CPU *cpu)
                 cpu->RetornaInterrupcao();
             }
         }
+        temporizador->PassarTempo();
     }
 }

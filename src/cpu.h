@@ -18,6 +18,7 @@ public:
     public:
         Estado();
 
+        void Inicializa();
         void AlteraAcumulador(int acumulador);
         int ObterAcumulador();
 
