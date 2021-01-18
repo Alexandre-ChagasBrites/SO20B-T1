@@ -1,12 +1,13 @@
 #pragma once
 
 #include <vector>
+#include <string>
 
 class DispositivoES
 {
 public:
     DispositivoES();
-    DispositivoES(const char *arquivo);
+    DispositivoES(std::string arquivo);
 
     int Ler();
     void Gravar(int a);

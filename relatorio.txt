@@ -1,0 +1,128 @@
+SO:
+ Quantum: 10
+ Prioridade: Abaixo
+
+CPU utilizada por processo:
+ Media: 11
+ Desvio padrao: 1
+ Coeficiente de variacao: 13
+
+Tempo em que o sistema esteve ativo: 1038
+Tempo ocioso total da CPU: 33
+Quantas vezes o SO executou: 786
+ Quantas foram instrucoes ilegais: 215
+ Quantas foram violacoes de memoria: 0
+ Quantas foram interrupcoes pelo temporizador: 571
+Quantas trocas de processos houve: 260
+ Quantas foram preempcao: 45
+
+Processo programa_es.txt:
+ Hora de inicio: 10
+ Hora de termino: 753
+ Tempo de retorno: 753
+ Tempo de CPU: 103
+ Percentual de CPU utilizada: 14
+ Tempo bloqueado: 465
+ Numero de vezes que bloqueou: 39
+ Numero de vezes que foi escalonado: 40
+ Numero de vezes que perdeu a CPU por preempcao: 0
+
+Processo programa_cpu.txt:
+ Hora de inicio: 20
+ Hora de termino: 1022
+ Tempo de retorno: 1022
+ Tempo de CPU: 98
+ Percentual de CPU utilizada: 10
+ Tempo bloqueado: 50
+ Numero de vezes que bloqueou: 2
+ Numero de vezes que foi escalonado: 12
+ Numero de vezes que perdeu a CPU por preempcao: 9
+
+Processo programa_es.txt:
+ Hora de inicio: 30
+ Hora de termino: 787
+ Tempo de retorno: 787
+ Tempo de CPU: 103
+ Percentual de CPU utilizada: 14
+ Tempo bloqueado: 485
+ Numero de vezes que bloqueou: 39
+ Numero de vezes que foi escalonado: 40
+ Numero de vezes que perdeu a CPU por preempcao: 0
+
+Processo programa_cpu.txt:
+ Hora de inicio: 40
+ Hora de termino: 1031
+ Tempo de retorno: 1031
+ Tempo de CPU: 98
+ Percentual de CPU utilizada: 10
+ Tempo bloqueado: 70
+ Numero de vezes que bloqueou: 2
+ Numero de vezes que foi escalonado: 12
+ Numero de vezes que perdeu a CPU por preempcao: 9
+
+Processo programa_cpu.txt:
+ Hora de inicio: 50
+ Hora de termino: 1032
+ Tempo de retorno: 1032
+ Tempo de CPU: 98
+ Percentual de CPU utilizada: 10
+ Tempo bloqueado: 80
+ Numero de vezes que bloqueou: 2
+ Numero de vezes que foi escalonado: 12
+ Numero de vezes que perdeu a CPU por preempcao: 9
+
+Processo programa_cpu.txt:
+ Hora de inicio: 60
+ Hora de termino: 1033
+ Tempo de retorno: 1033
+ Tempo de CPU: 98
+ Percentual de CPU utilizada: 10
+ Tempo bloqueado: 90
+ Numero de vezes que bloqueou: 2
+ Numero de vezes que foi escalonado: 12
+ Numero de vezes que perdeu a CPU por preempcao: 9
+
+Processo programa_es.txt:
+ Hora de inicio: 70
+ Hora de termino: 879
+ Tempo de retorno: 879
+ Tempo de CPU: 103
+ Percentual de CPU utilizada: 13
+ Tempo bloqueado: 525
+ Numero de vezes que bloqueou: 39
+ Numero de vezes que foi escalonado: 40
+ Numero de vezes que perdeu a CPU por preempcao: 0
+
+Processo programa_cpu.txt:
+ Hora de inicio: 80
+ Hora de termino: 1038
+ Tempo de retorno: 1038
+ Tempo de CPU: 98
+ Percentual de CPU utilizada: 10
+ Tempo bloqueado: 110
+ Numero de vezes que bloqueou: 2
+ Numero de vezes que foi escalonado: 12
+ Numero de vezes que perdeu a CPU por preempcao: 9
+
+Processo programa_es.txt:
+ Hora de inicio: 90
+ Hora de termino: 1035
+ Tempo de retorno: 1035
+ Tempo de CPU: 103
+ Percentual de CPU utilizada: 11
+ Tempo bloqueado: 545
+ Numero de vezes que bloqueou: 39
+ Numero de vezes que foi escalonado: 40
+ Numero de vezes que perdeu a CPU por preempcao: 0
+
+Processo programa_es.txt:
+ Hora de inicio: 100
+ Hora de termino: 1037
+ Tempo de retorno: 1037
+ Tempo de CPU: 103
+ Percentual de CPU utilizada: 11
+ Tempo bloqueado: 555
+ Numero de vezes que bloqueou: 39
+ Numero de vezes que foi escalonado: 40
+ Numero de vezes que perdeu a CPU por preempcao: 0
+

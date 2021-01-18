@@ -3,10 +3,12 @@
 #include <fstream>
 #include <cstring>
 
-DescritorJob::Dispositivo::Dispositivo() : n(0), tempo(0) {}
-DescritorJob::Dispositivo::Dispositivo(unsigned int n, unsigned int tempo) : n(n), tempo(tempo) {}
+DescritorJob::Dispositivo::Dispositivo() : nome(""), tempoLeitura(0), tempoGravacao(0) {}
+DescritorJob::Dispositivo::Dispositivo(std::string nome, unsigned int tempoLeitura, unsigned int tempoGravacao) :
+    nome(nome), tempoLeitura(tempoLeitura), tempoGravacao(tempoGravacao) {}
 
-DescritorJob::DescritorJob(const char *arquivo) : programa(0), memoriaNecessaria(0), entrada(), saida()
+DescritorJob::DescritorJob(std::string arquivo, unsigned int dataLancamento) :
+    arquivo(arquivo), programa(0), memoriaNecessaria(0), dispositivos(0), dataLancamento(dataLancamento)
 {
     std::vector<std::string> strings;
     std::ifstream file(arquivo);
@@ -15,40 +17,52 @@ DescritorJob::DescritorJob(const char *arquivo) : programa(0), memoriaNecessaria
         strings.push_back(str);
     file.close();
 
-    for (std::string str : strings)
+    unsigned int tipo = 0;
+    for (unsigned int i = 0; i < strings.size(); i++)
     {
-        const char *c_str = str.c_str();
-        if (std::strstr(c_str, "#PROGRAMA"))
-        {
-            unsigned int startPrograma, countPrograma;
-            int found = sscanf(c_str, "%*s %u %u", &startPrograma, &countPrograma);
+        const char *c_str = strings[i].c_str();
 
-            if (found == 2)
+        if (tipo == 0)
+        {
+            if (std::strstr(c_str, "#MEMORIA"))
             {
-                for (unsigned int i = 0; i < countPrograma; i++)
-                    programa.push_back(strings[startPrograma + i]);
+                unsigned int quantidade;
+                int found = sscanf(c_str, "%*s %u", &quantidade);
+
+                if (found == 1)
+                    memoriaNecessaria = quantidade;
             }
+            else if (std::strstr(c_str, "#PROGRAMA"))
+                tipo = 1;
+            else if (std::strstr(c_str, "#DISPOSITIVOS"))
+                tipo = 2;
         }
-        else if (std::strstr(c_str, "#MEMORIA"))
+        else
         {
-            unsigned int quantidade;
-            int found = sscanf(c_str, "%*s %u", &quantidade);
-
-            if (found == 1)
-                memoriaNecessaria = quantidade;
-        }
-        else if (std::strstr(c_str, "#ENTRADA") || std::strstr(c_str, "#SAIDA"))
-        {
-            unsigned int n;
-            unsigned int tempo;
-            int found = sscanf(c_str, "%*s %u %u", &n, &tempo);
-
-            if (found == 2)
+            if (std::strstr(c_str, "#FIM"))
             {
-                if (std::strstr(c_str, "#ENTRADA"))
-                    entrada = Dispositivo(n, tempo);
-                else
-                    saida = Dispositivo(n, tempo);
+                tipo = 0;
+                continue;
+            }
+
+            if (tipo == 1)
+            {
+                unsigned char c;
+                int found = sscanf(c_str, "%c", &c);
+                if (found && c == ';')
+                    continue;
+
+                programa.push_back(strings[i]);
+            }
+            else if (tipo == 2 || tipo == 3)
+            {
+                char nome[64];
+                unsigned int tempoLeitura;
+                unsigned int tempoGravacao;
+                int found = sscanf(c_str, "%s %u %u", nome, &tempoLeitura, &tempoGravacao);
+
+                if (found == 3)
+                    dispositivos.push_back(Dispositivo(nome, tempoLeitura, tempoGravacao));
             }
         }
     }

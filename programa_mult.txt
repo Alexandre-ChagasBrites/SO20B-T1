@@ -1,7 +1,9 @@
-#PROGRAMA 4 19
 #MEMORIA 3
-#ENTRADA 0 10
-#SAIDA 1 10
+#DISPOSITIVOS
+dispositivo_mult0.txt 10 10
+dispositivo_mult1.txt 10 10
+#FIM
+#PROGRAMA
 LE 0
 ARMM  0
 LE 0
@@ -20,4 +22,6 @@ ARMM  0
 CARGI 0
 DESVZ 6
 CARGM 2
+GRAVA 1
 PARA
+#FIM

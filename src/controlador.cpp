@@ -29,13 +29,7 @@ void Controlador::Executa(SO *so, CPU *cpu, Temporizador *temporizador)
         }
 
         for (std::string interrupcao = temporizador->ObterInterrupcao(); interrupcao != ""; interrupcao = temporizador->ObterInterrupcao())
-        {
-            if (interrupcao == "DORMINDO")
-            {
-                cpu->AlteraEstado(so->estado);
-                cpu->RetornaInterrupcao();
-            }
-        }
+            so->InterrupcaoTemporizador(interrupcao);
         temporizador->PassarTempo();
     }
 }

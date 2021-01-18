@@ -1,0 +1,42 @@
+#MEMORIA 3
+#DISPOSITIVOS
+dispositivo_cpu0.txt 20 20
+dispositivo_cpu1.txt 10 10
+#FIM
+#PROGRAMA
+; programa que calcula o somatório de 1 até N.
+; lê N da entrada 0, grava o somatório na saída 1
+;
+; programa só faz uma leitura e uma entrada, e pode ficar um bom tempo 
+; calculando, dependendo do valor da entrada
+;
+; usa 3 posições na memória de dados (0, 1 e 2)
+;
+; 0: A=0
+CARGI 0
+ARMM  0
+; 2: B=entrada0
+LE    0
+ARMM  1
+; 4: C=-1
+CARGI 1
+NEG
+ARMM  2
+; 7: A+=B
+CARGM 0
+SOMA  1
+ARMM  0
+; 10: B-- (ou B+=C)
+CARGM 1
+SOMA  2
+ARMM  1
+; 13: if B!=0 goto 7 (B já está no acumulador)
+DESVZ 16
+CARGI 0
+DESVZ 7
+; 16: saida1=A
+CARGM 0
+GRAVA 1
+; 18: fim
+PARA
+#FIM

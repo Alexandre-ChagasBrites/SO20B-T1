@@ -3,11 +3,9 @@
 #include <fstream>
 #include <cstring>
 
-#include <iostream>
-
 DispositivoES::DispositivoES() : dados(0), indice(0) {}
 
-DispositivoES::DispositivoES(const char *arquivo) : DispositivoES::DispositivoES()
+DispositivoES::DispositivoES(std::string arquivo) : DispositivoES::DispositivoES()
 {
     std::vector<std::string> strings;
     std::ifstream file(arquivo);

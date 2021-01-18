@@ -1,0 +1,31 @@
+#MEMORIA 1
+#DISPOSITIVOS
+dispositivo_es0.txt 10 10
+dispositivo_es1.txt 20 20
+dispositivo_es2.txt 5 5
+#FIM
+#PROGRAMA
+; programa que grava em um arquivo a soma dos valores lidos de outros 2
+; os arquivos de entrada são 0 e 1, o de saída é o 2
+; o programa termina quando gravar o valor 0 (os dois valores de entrada
+; são 0 ou têm o mesmo valor absoluto, mas um é + e outro -)
+;
+; programa limitado por E/S, o tempo de execução pode ser controlado
+; pelo tamanho e desempenho dos arquivos.
+;
+; usa só a posição 0 da memória de dados
+;
+; 0: A=entrada0
+LE    0
+ARMM  0
+; 2: saida2=entrada1+A
+LE    1
+SOMA  0
+GRAVA 2
+; 5: if dado gravado != 0 goto 0
+DESVZ 8
+CARGI 0
+DESVZ 0
+; 8: fim
+PARA
+#FIM

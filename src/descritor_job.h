@@ -10,18 +10,22 @@ public:
     {
     public:
         Dispositivo();
-        Dispositivo(unsigned int n, unsigned int tempo);
+        Dispositivo(std::string nome, unsigned int tempoLeitura, unsigned int tempoGravacao);
     public:
-        unsigned int n;
-        unsigned int tempo;
+        std::string nome;
+        unsigned int tempoLeitura;
+        unsigned int tempoGravacao;
     };
 
 public:
-    DescritorJob(const char *arquivo);
+    DescritorJob(std::string arquivo, unsigned int dataLancamento);
+    friend class SO;
+    friend class DescritorProcesso;
 
-public:
+private:
+    std::string arquivo;
     std::vector<std::string> programa;
     unsigned int memoriaNecessaria;
-    Dispositivo entrada;
-    Dispositivo saida;
+    std::vector<Dispositivo> dispositivos;
+    unsigned int dataLancamento;
 };

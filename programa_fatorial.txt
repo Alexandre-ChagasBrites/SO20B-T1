@@ -1,10 +1,12 @@
-#PROGRAMA 4 36
 #MEMORIA 5
-#ENTRADA 2 5
-#SAIDA 3 20
+#DISPOSITIVOS
+dispositivo_fatorial0.txt 5 20
+dispositivo_fatorial1.txt 20 5
+#FIM
+#PROGRAMA
 CARGI 1
 ARMM 0
-LE 2
+LE 0
 ARMM 1
 CARGI 0
 ARMM 2
@@ -37,4 +39,6 @@ ARMM 1
 CARGI 0
 DESVZ 6
 CARGM 0
+GRAVA 1
 PARA
+#FIM
