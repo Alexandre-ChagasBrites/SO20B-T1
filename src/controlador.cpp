@@ -2,6 +2,7 @@
 
 #include "so.h"
 #include "cpu.h"
+#include <iostream>
 
 void Controlador::Executa(SO *so, CPU *cpu, Temporizador *temporizador)
 {
@@ -9,6 +10,7 @@ void Controlador::Executa(SO *so, CPU *cpu, Temporizador *temporizador)
     {
         if (cpu->ObterInterrupcao() != CPU::Interrupcao::Dormindo)
         {
+            //std::cout << cpu->Instrucao() << "\n";
             cpu->Executa();
 
             bool continuar = true;

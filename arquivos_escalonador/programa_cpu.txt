@@ -1,7 +1,7 @@
 #MEMORIA 3
 #DISPOSITIVOS
-dispositivo_cpu0.txt 20 20
-dispositivo_cpu1.txt 10 10
+arquivos_escalonador/dispositivo_cpu0.txt 20 20
+arquivos_escalonador/dispositivo_cpu1.txt 10 10
 #FIM
 #PROGRAMA
 ; programa que calcula o somatório de 1 até N.

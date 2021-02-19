@@ -1,8 +1,8 @@
 #MEMORIA 1
 #DISPOSITIVOS
-dispositivo_es0.txt 10 10
-dispositivo_es1.txt 20 20
-dispositivo_es2.txt 5 5
+arquivos_escalonador/dispositivo_es0.txt 10 10
+arquivos_escalonador/dispositivo_es1.txt 20 20
+arquivos_escalonador/dispositivo_es2.txt 5 5
 #FIM
 #PROGRAMA
 ; programa que grava em um arquivo a soma dos valores lidos de outros 2

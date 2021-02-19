@@ -1,6 +1,6 @@
 #include "cpu.h"
 
-#include <cstring>
+#include <sstream>
 
 CPU::Estado::Estado() : pc(0), acumulador(0), interrupcao(CPU::Interrupcao::Normal) {}
 
@@ -21,14 +21,14 @@ int CPU::Estado::ObterAcumulador()
     return acumulador;
 }
 
+CPU::CPU(MMU &mmu) : estado(), programa(nullptr), mmu(mmu)
+{
+
+}
+
 void CPU::AlteraPrograma(std::vector<std::string> *programa)
 {
     this->programa = programa;
-}
-
-void CPU::AlteraDados(std::vector<int> *dados)
-{
-    this->dados = dados;
 }
 
 CPU::Interrupcao CPU::ObterInterrupcao()
@@ -40,8 +40,9 @@ void CPU::RetornaInterrupcao()
 {
     if (estado.interrupcao == Interrupcao::Normal)
         return;
+    if (estado.interrupcao != Interrupcao::ViolacaoDeMemoria)
+        estado.pc++;
     estado.interrupcao = Interrupcao::Normal;
-    estado.pc++;
 }
 
 std::string CPU::Instrucao()
@@ -54,12 +55,12 @@ std::string CPU::Instrucao()
     return (*programa)[estado.pc];
 }
 
-void CPU::SalvaEstado(Estado *e)
+void CPU::SalvaEstado(Estado &e)
 {
-    *e = estado;
+    e = estado;
 }
 
-void CPU::AlteraEstado(Estado e)
+void CPU::AlteraEstado(Estado &e)
 {
     estado = e;
 }
@@ -74,72 +75,79 @@ void CPU::Executa()
     if (estado.interrupcao != Interrupcao::Normal)
         return;
 
-    std::string instrucao = Instrucao();
+    std::stringstream instrucao(Instrucao());
     if (estado.interrupcao == Interrupcao::ViolacaoDeMemoria)
         return;
 
     bool incrementar = true;
+    std::string comando;
+    instrucao >> comando;
 
-    const char *c_instrucao = instrucao.c_str();
-    if (std::strstr(c_instrucao, "CARGI"))
+    if (comando == "CARGI")
     {
         //CARGI	n	coloca o valor n no acumulador (A=n)
         int n;
-        std::sscanf(c_instrucao, "%*s %i", &n);
+        instrucao >> n;
         estado.acumulador = n;
         //printf("A=%i\n", n);
     }
-    else if (std::strstr(c_instrucao, "CARGM"))
+    else if (comando == "CARGM")
     {
         //CARGM	n	coloca no acumulador o valor na posição n da memória de dados (A=M[n])
         int n;
-        std::sscanf(c_instrucao, "%*s %i", &n);
+        instrucao >> n;
         estado.acumulador = MemoriaLer(n);
         //printf("A=M[%i]\n", n);
     }
-    else if (std::strstr(c_instrucao, "CARGX"))
+    else if (comando == "CARGX")
     {
         //CARGX	n	coloca no acumulador o valor na posição que está na posição n da memória de dados (A=M[M[n]])
         int n;
-        std::sscanf(c_instrucao, "%*s %i", &n);
-        estado.acumulador = MemoriaLer(MemoriaLer(n));
+        instrucao >> n;
+
+        int i = MemoriaLer(n);
+        if (estado.interrupcao != Interrupcao::ViolacaoDeMemoria)
+            estado.acumulador = MemoriaLer(i);
         //printf("A=M[M[%i]]\n", n);
     }
-    else if (std::strstr(c_instrucao, "ARMM"))
+    else if (comando == "ARMM")
     {
         //ARMM	n	coloca o valor do acumulador na posição n da memória de dados (M[n]=A)
         int n;
-        std::sscanf(c_instrucao, "%*s %i", &n);
+        instrucao >> n;
         MemoriaEscrever(n, estado.acumulador);
         //printf("M[%i]=A\n", n);
     }
-    else if (std::strstr(c_instrucao, "ARMX"))
+    else if (comando == "ARMX")
     {
         //ARMX	n	coloca o valor do acumulador posição que está na posição n da memória de dados (M[M[n]]=A)
         int n;
-        std::sscanf(c_instrucao, "%*s %i", &n);
-        MemoriaEscrever(MemoriaLer(n), estado.acumulador);
+        instrucao >> n;
+
+        int i = MemoriaLer(n);
+        if (estado.interrupcao != Interrupcao::ViolacaoDeMemoria)
+            MemoriaEscrever(i, estado.acumulador);
         //printf("M[M[%i]]=A\n", n);
     }
-    else if (std::strstr(c_instrucao, "SOMA"))
+    else if (comando == "SOMA")
     {
         //SOMA	n	soma ao acumulador o valor no endereço n da memória de dados (A=A+M[n])
         int n;
-        std::sscanf(c_instrucao, "%*s %i", &n);
+        instrucao >> n;
         estado.acumulador += MemoriaLer(n);
         //printf("A=A+M[%i]\n", n);
     }
-    else if (std::strstr(c_instrucao, "NEG"))
+    else if (comando == "NEG")
     {
         //NEG		inverte o sinal do acumulador (A=-A)
         estado.acumulador = -estado.acumulador;
         //printf("A=-A\n");
     }
-    else if (std::strstr(c_instrucao, "DESVZ"))
+    else if (comando == "DESVZ")
     {
         //DESVZ	n	se A vale 0, coloca o valor n no PC
         int n;
-        std::sscanf(c_instrucao, "%*s %i", &n);
+        instrucao >> n;
         if (estado.acumulador == 0)
         {
             estado.pc = n;
@@ -161,22 +169,18 @@ void CPU::Executa()
 
 int CPU::MemoriaLer(unsigned int i)
 {
-    if (i >= dados->size())
-    {
+    int valor = 0;
+    MMU::Erro erro = mmu.Ler(i, valor);
+    if (erro == MMU::Erro::AcessoInvalido || erro == MMU::Erro::PaginaInvalida)
         estado.interrupcao = Interrupcao::ViolacaoDeMemoria;
-        return 0;
-    }
-    return (*dados)[i];
+    return valor;
 }
 
 void CPU::MemoriaEscrever(unsigned int i, int valor)
 {
-    if (i >= dados->size())
-    {
+    MMU::Erro erro = mmu.Alterar(i, valor);
+    if (erro == MMU::Erro::AcessoInvalido || erro == MMU::Erro::PaginaInvalida)
         estado.interrupcao = Interrupcao::ViolacaoDeMemoria;
-        return;
-    }
-    (*dados)[i] = valor;
 }
 
 std::ostream &operator<<(std::ostream &os, CPU &cpu)
@@ -184,9 +188,6 @@ std::ostream &operator<<(std::ostream &os, CPU &cpu)
     os << "CPU:\n";
     os << " Instrucao: " << cpu.Instrucao() << std::endl;
     os << cpu.estado;
-    os << " Memoria de dados:\n";
-    for (unsigned int i = 0; i < cpu.dados->size(); i++)
-        os << "  " << std::hex << i << " = " << std::dec << (*cpu.dados)[i] << std::endl;
     return os;
 }
 

@@ -6,5 +6,5 @@
 class Escalonador
 {
 public:
-    DescritorProcesso *RetornaProcesso(DescritorProcesso *processoExecucao, std::vector<DescritorProcesso*> *processos);
+    int RetornaProcesso(int processoAtual, std::vector<DescritorProcesso*> *processos);
 };

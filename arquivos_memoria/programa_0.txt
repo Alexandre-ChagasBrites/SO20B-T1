@@ -1,0 +1,87 @@
+#MEMORIA 80
+#DISPOSITIVOS
+arquivos_memoria/dispositivo_0.txt 10 10
+arquivos_memoria/dispositivo_1.txt 10 10
+#FIM
+#PROGRAMA
+; 0: le a dimensao da matriz
+LE 0
+ARMM 0
+ARMM 2
+LE 0
+ARMM 1
+ARMM 3
+; ?: inicializa ponteiro para matriz (ponteiro no end 4 aponta para matriz no end. 10)
+CARGI 10
+ARMM 4
+; lemais1: le um valor, armazena na proxima posicao da matriz
+LE 0
+ARMX 4
+; ?: incrementa ponteiro
+CARGI 1
+SOMA 4
+ARMM 4
+; ?: subtrai 1 da coluna
+CARGI -1
+SOMA 3
+ARMM 3
+; ?: se coluna for 0, terminou uma linha
+DESVZ 19
+; ?: nao terminou a linha, le mais um dado
+CARGI 0
+DESVZ 8
+; ali: reinicializa contador de coluna
+CARGM 2
+ARMM 3
+; ?: decrementa um da linha
+CARGI -1
+SOMA 1
+ARMM 1
+; ?: se linha for 0, terminou a leitura
+DESVZ 27
+; ?: le mais um dado
+CARGI 0
+DESVZ 8
+; lido: reinicia o ponteiro da matriz
+CARGI 10
+ARMM 4
+; ?: reinicia o contador de linhas
+CARGM 0
+ARMM 1
+; soma1linha: reinicia o contador de colunas e o somador de linha
+CARGM 2
+ARMM 3
+CARGI 0
+ARMM 5
+; somamais1: soma um valor
+CARGX 4
+SOMA 5
+ARMM 5
+; ?: incrementa ponteiro da matriz
+CARGI 1
+SOMA 4
+ARMM 4
+; ?: subtrai 1 da coluna
+CARGI -1
+SOMA 3
+ARMM 3
+; ?: se coluna for 0, terminou uma linha
+DESVZ 47
+; ?: nao terminou a linha, soma mais um dado
+CARGI 0
+DESVZ 35
+; somou1linha: grava no arquivo de saida
+CARGM 5
+GRAVA 1
+; ?: decrementa um da linha
+CARGI -1
+SOMA 1
+ARMM 1
+; ?: se linha for 0, terminou a matriz
+DESVZ 55
+; ?: soma a proxima linha
+CARGI 0
+DESVZ 31
+; fim: termina o programa
+PARA
+#FIM

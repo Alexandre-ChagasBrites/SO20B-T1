@@ -1,28 +1,26 @@
 #include "dispositivo_es.h"
 
 #include <fstream>
-#include <cstring>
+#include <sstream>
 
 DispositivoES::DispositivoES() : dados(0), indice(0) {}
 
 DispositivoES::DispositivoES(std::string arquivo) : DispositivoES::DispositivoES()
 {
-    std::vector<std::string> strings;
+    std::vector<std::string> linhas;
+
     std::ifstream file(arquivo);
-    std::string str;
-    while (std::getline(file, str))
-        strings.push_back(str);
+    {
+        std::string linha;
+        while (std::getline(file, linha))
+            linhas.push_back(linha);
+    }
     file.close();
 
-    for (std::string str : strings)
+    for (std::string linha : linhas)
     {
-        const char *c_str = str.c_str();
-
-        int a;
-        int found = sscanf(c_str, "%i", &a);
-
-        if (found == 1)
-            dados.push_back(a);
+        int a = std::stoi(linha);
+        dados.push_back(a);
     }
 }
 

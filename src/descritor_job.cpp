@@ -1,7 +1,7 @@
 #include "descritor_job.h"
 
 #include <fstream>
-#include <cstring>
+#include <sstream>
 
 DescritorJob::Dispositivo::Dispositivo() : nome(""), tempoLeitura(0), tempoGravacao(0) {}
 DescritorJob::Dispositivo::Dispositivo(std::string nome, unsigned int tempoLeitura, unsigned int tempoGravacao) :
@@ -10,36 +10,39 @@ DescritorJob::Dispositivo::Dispositivo(std::string nome, unsigned int tempoLeitu
 DescritorJob::DescritorJob(std::string arquivo, unsigned int dataLancamento) :
     arquivo(arquivo), programa(0), memoriaNecessaria(0), dispositivos(0), dataLancamento(dataLancamento)
 {
-    std::vector<std::string> strings;
+    std::vector<std::string> linhas;
+
     std::ifstream file(arquivo);
-    std::string str;
-    while (std::getline(file, str))
-        strings.push_back(str);
+    {
+        std::string linha;
+        while (std::getline(file, linha))
+            linhas.push_back(linha);
+    }
     file.close();
 
     unsigned int tipo = 0;
-    for (unsigned int i = 0; i < strings.size(); i++)
+    for (unsigned int i = 0; i < linhas.size(); i++)
     {
-        const char *c_str = strings[i].c_str();
-
+        std::stringstream linha(linhas[i]);
         if (tipo == 0)
         {
-            if (std::strstr(c_str, "#MEMORIA"))
+            std::string comando;
+            linha >> comando;
+
+            if (comando == "#MEMORIA")
             {
                 unsigned int quantidade;
-                int found = sscanf(c_str, "%*s %u", &quantidade);
-
-                if (found == 1)
-                    memoriaNecessaria = quantidade;
+                linha >> quantidade;
+                memoriaNecessaria = quantidade;
             }
-            else if (std::strstr(c_str, "#PROGRAMA"))
+            else if (comando == "#PROGRAMA")
                 tipo = 1;
-            else if (std::strstr(c_str, "#DISPOSITIVOS"))
+            else if (comando == "#DISPOSITIVOS")
                 tipo = 2;
         }
         else
         {
-            if (std::strstr(c_str, "#FIM"))
+            if (linha.str() == "#FIM")
             {
                 tipo = 0;
                 continue;
@@ -47,22 +50,21 @@ DescritorJob::DescritorJob(std::string arquivo, unsigned int dataLancamento) :
 
             if (tipo == 1)
             {
-                unsigned char c;
-                int found = sscanf(c_str, "%c", &c);
-                if (found && c == ';')
+                if (linha.str().find(';') != std::string::npos)
                     continue;
-
-                programa.push_back(strings[i]);
+                programa.push_back(linhas[i]);
             }
             else if (tipo == 2 || tipo == 3)
             {
-                char nome[64];
+                std::string nome;
                 unsigned int tempoLeitura;
                 unsigned int tempoGravacao;
-                int found = sscanf(c_str, "%s %u %u", nome, &tempoLeitura, &tempoGravacao);
 
-                if (found == 3)
-                    dispositivos.push_back(Dispositivo(nome, tempoLeitura, tempoGravacao));
+                linha >> nome;
+                linha >> tempoLeitura;
+                linha >> tempoGravacao;
+
+                dispositivos.push_back(Dispositivo(nome, tempoLeitura, tempoGravacao));
             }
         }
     }

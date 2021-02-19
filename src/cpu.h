@@ -5,6 +5,8 @@
 #include <array>
 #include <vector>
 
+#include "mmu.h"
+
 class CPU
 {
 public:
@@ -32,18 +34,15 @@ public:
     };
 
 public:
-    //CPU() {};
-    //~CPU() {};
+    CPU(MMU &mmu);
 
     void AlteraPrograma(std::vector<std::string> *programa);
-    void AlteraDados(std::vector<int> *dados);
-
     Interrupcao ObterInterrupcao();
     void RetornaInterrupcao();
     std::string Instrucao();
 
-    void SalvaEstado(Estado *e);
-    void AlteraEstado(Estado e);
+    void SalvaEstado(Estado &e);
+    void AlteraEstado(Estado &e);
     void Dormir();
     void Executa();
 
@@ -56,5 +55,5 @@ private:
 private:
     Estado estado;
     std::vector<std::string> *programa;
-    std::vector<int> *dados;
+    MMU &mmu;
 };

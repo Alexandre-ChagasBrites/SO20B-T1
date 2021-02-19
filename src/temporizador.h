@@ -28,7 +28,7 @@ private:
     public:
         bool operator()(const Interrupcao &a, const Interrupcao &b) const
         {
-            return a.data >= b.data;
+            return a.data > b.data;
         }
     };
 
