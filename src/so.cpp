@@ -336,10 +336,10 @@ void SO::Escalonar()
             switch (prioridade)
             {
             case Prioridade::Abaixo:
-                processos[processoAtual]->prioridade = (processos[processoAtual]->prioridade + (quantum - processos[processoAtual]->quantum) / (float)quantum) * 0.5f;
+                processos[processoAtual]->prioridade = (processos[processoAtual]->prioridade + processos[processoAtual]->quantum / (float)quantum) * 0.5f;
                 break;
             case Prioridade::Acima:
-                processos[processoAtual]->prioridade = (processos[processoAtual]->prioridade + processos[processoAtual]->quantum / (float)quantum) * 0.5f;
+                processos[processoAtual]->prioridade = (processos[processoAtual]->prioridade + (quantum - processos[processoAtual]->quantum) / (float)quantum) * 0.5f;
                 break;
             default:
                 break;

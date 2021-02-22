@@ -1,0 +1,192 @@
+SO:
+ Tamanho de pagina: 4
+ Tamanho total: 10
+ Troca de pagina: FIFO
+ Quantum: 10
+ Prioridade: Fixa
+
+Tempo em que o sistema esteve ativo: 1343
+Tempo ocioso total da CPU: 328
+Numero total de falhas de pagina atendidas: 10
+Quantas vezes o SO executou: 862
+ Quantas foram instrucoes ilegais: 215
+ Quantas foram violacoes de memoria: 10
+ Quantas foram interrupcoes pelo temporizador: 637
+Quantas trocas de processos houve: 270
+ Quantas foram preempcao: 45
+
+CPU utilizada por processo:
+ Media: 19
+ Desvio padrao: 14.6367
+ Coeficiente de variacao: 73
+
+Processo 0(arquivos_escalonador/programa_es.txt):
+ Hora de inicio: 10
+ Hora de termino: 740
+ Tempo de retorno: 740
+ Tempo de CPU: 104
+ Percentual de CPU utilizada: 14
+ Tempo bloqueado: 465
+  Tempo bloqueado em E/S: 455
+  Tempo Bloqueado esperando troca de pagina: 10
+ Tempo de espera em fila de escalonamento: 161
+ Numero de falhas de pagina: 1
+ Numero de vezes que bloqueou: 40
+ Numero de vezes que foi escalonado: 41
+ Numero de vezes que perdeu a CPU por preempcao: 0
+ Quantidade de memoria: 4
+  0x0: 0 | 0x1: 0 | 0x2: 0 | 0x3: 0 | 
+
+Processo 1(arquivos_escalonador/programa_cpu.txt):
+ Hora de inicio: 20
+ Hora de termino: 191
+ Tempo de retorno: 191
+ Tempo de CPU: 99
+ Percentual de CPU utilizada: 58
+ Tempo bloqueado: 40
+  Tempo bloqueado em E/S: 30
+  Tempo Bloqueado esperando troca de pagina: 10
+ Tempo de espera em fila de escalonamento: 32
+ Numero de falhas de pagina: 1
+ Numero de vezes que bloqueou: 3
+ Numero de vezes que foi escalonado: 13
+ Numero de vezes que perdeu a CPU por preempcao: 9
+ Quantidade de memoria: 4
+  0x0: 55 | 0x1: 0 | 0x2: -1 | 0x3: 0 | 
+
+Processo 2(arquivos_escalonador/programa_es.txt):
+ Hora de inicio: 30
+ Hora de termino: 834
+ Tempo de retorno: 834
+ Tempo de CPU: 104
+ Percentual de CPU utilizada: 13
+ Tempo bloqueado: 465
+  Tempo bloqueado em E/S: 455
+  Tempo Bloqueado esperando troca de pagina: 10
+ Tempo de espera em fila de escalonamento: 235
+ Numero de falhas de pagina: 1
+ Numero de vezes que bloqueou: 40
+ Numero de vezes que foi escalonado: 41
+ Numero de vezes que perdeu a CPU por preempcao: 0
+ Quantidade de memoria: 4
+  0x0: 0 | 0x1: 0 | 0x2: 0 | 0x3: 0 | 
+
+Processo 3(arquivos_escalonador/programa_cpu.txt):
+ Hora de inicio: 40
+ Hora de termino: 338
+ Tempo de retorno: 338
+ Tempo de CPU: 99
+ Percentual de CPU utilizada: 33
+ Tempo bloqueado: 40
+  Tempo bloqueado em E/S: 30
+  Tempo Bloqueado esperando troca de pagina: 10
+ Tempo de espera em fila de escalonamento: 159
+ Numero de falhas de pagina: 1
+ Numero de vezes que bloqueou: 3
+ Numero de vezes que foi escalonado: 13
+ Numero de vezes que perdeu a CPU por preempcao: 9
+ Quantidade de memoria: 4
+  0x0: 55 | 0x1: 0 | 0x2: -1 | 0x3: 0 | 
+
+Processo 4(arquivos_escalonador/programa_cpu.txt):
+ Hora de inicio: 50
+ Hora de termino: 459
+ Tempo de retorno: 459
+ Tempo de CPU: 99
+ Percentual de CPU utilizada: 24
+ Tempo bloqueado: 40
+  Tempo bloqueado em E/S: 30
+  Tempo Bloqueado esperando troca de pagina: 10
+ Tempo de espera em fila de escalonamento: 270
+ Numero de falhas de pagina: 1
+ Numero de vezes que bloqueou: 3
+ Numero de vezes que foi escalonado: 13
+ Numero de vezes que perdeu a CPU por preempcao: 9
+ Quantidade de memoria: 4
+  0x0: 55 | 0x1: 0 | 0x2: -1 | 0x3: 0 | 
+
+Processo 5(arquivos_escalonador/programa_cpu.txt):
+ Hora de inicio: 60
+ Hora de termino: 634
+ Tempo de retorno: 634
+ Tempo de CPU: 99
+ Percentual de CPU utilizada: 17
+ Tempo bloqueado: 40
+  Tempo bloqueado em E/S: 30
+  Tempo Bloqueado esperando troca de pagina: 10
+ Tempo de espera em fila de escalonamento: 435
+ Numero de falhas de pagina: 1
+ Numero de vezes que bloqueou: 3
+ Numero de vezes que foi escalonado: 13
+ Numero de vezes que perdeu a CPU por preempcao: 9
+ Quantidade de memoria: 4
+  0x0: 55 | 0x1: 0 | 0x2: -1 | 0x3: 0 | 
+
+Processo 6(arquivos_escalonador/programa_es.txt):
+ Hora de inicio: 70
+ Hora de termino: 1224
+ Tempo de retorno: 1224
+ Tempo de CPU: 104
+ Percentual de CPU utilizada: 9
+ Tempo bloqueado: 465
+  Tempo bloqueado em E/S: 455
+  Tempo Bloqueado esperando troca de pagina: 10
+ Tempo de espera em fila de escalonamento: 585
+ Numero de falhas de pagina: 1
+ Numero de vezes que bloqueou: 40
+ Numero de vezes que foi escalonado: 41
+ Numero de vezes que perdeu a CPU por preempcao: 0
+ Quantidade de memoria: 4
+  0x0: 0 | 0x1: 0 | 0x2: 0 | 0x3: 0 | 
+
+Processo 7(arquivos_escalonador/programa_cpu.txt):
+ Hora de inicio: 80
+ Hora de termino: 779
+ Tempo de retorno: 779
+ Tempo de CPU: 99
+ Percentual de CPU utilizada: 14
+ Tempo bloqueado: 40
+  Tempo bloqueado em E/S: 30
+  Tempo Bloqueado esperando troca de pagina: 10
+ Tempo de espera em fila de escalonamento: 560
+ Numero de falhas de pagina: 1
+ Numero de vezes que bloqueou: 3
+ Numero de vezes que foi escalonado: 13
+ Numero de vezes que perdeu a CPU por preempcao: 9
+ Quantidade de memoria: 4
+  0x0: 55 | 0x1: 0 | 0x2: -1 | 0x3: 0 | 
+
+Processo 8(arquivos_escalonador/programa_es.txt):
+ Hora de inicio: 90
+ Hora de termino: 1319
+ Tempo de retorno: 1319
+ Tempo de CPU: 104
+ Percentual de CPU utilizada: 8
+ Tempo bloqueado: 465
+  Tempo bloqueado em E/S: 455
+  Tempo Bloqueado esperando troca de pagina: 10
+ Tempo de espera em fila de escalonamento: 660
+ Numero de falhas de pagina: 1
+ Numero de vezes que bloqueou: 40
+ Numero de vezes que foi escalonado: 41
+ Numero de vezes que perdeu a CPU por preempcao: 0
+ Quantidade de memoria: 4
+  0x0: 0 | 0x1: 0 | 0x2: 0 | 0x3: 0 | 
+
+Processo 9(arquivos_escalonador/programa_es.txt):
+ Hora de inicio: 100
+ Hora de termino: 1343
+ Tempo de retorno: 1343
+ Tempo de CPU: 104
+ Percentual de CPU utilizada: 8
+ Tempo bloqueado: 465
+  Tempo bloqueado em E/S: 455
+  Tempo Bloqueado esperando troca de pagina: 10
+ Tempo de espera em fila de escalonamento: 674
+ Numero de falhas de pagina: 1
+ Numero de vezes que bloqueou: 40
+ Numero de vezes que foi escalonado: 41
+ Numero de vezes que perdeu a CPU por preempcao: 0
+ Quantidade de memoria: 4
+  0x0: 0 | 0x1: 0 | 0x2: 0 | 0x3: 0 | 
+
